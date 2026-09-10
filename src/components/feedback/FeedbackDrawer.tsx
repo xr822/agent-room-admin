@@ -239,19 +239,6 @@ export function FeedbackDrawer({ open, room, onClose }: FeedbackDrawerProps) {
   );
   const selectedCount = selectedIo.length + selectedExec.length;
 
-  const bulkMode = useMemo(() => {
-    const allIo = ioTasks.length > 0 && selectedIo.length === ioTasks.length;
-    const allExec =
-      execTasks.length > 0 && selectedExec.length === execTasks.length;
-    const noneIo = selectedIo.length === 0;
-    const noneExec = selectedExec.length === 0;
-    if (noneIo && noneExec) return 'none';
-    if (allIo && allExec) return 'all';
-    if (allIo && noneExec) return 'io';
-    if (noneIo && allExec) return 'exec';
-    return 'custom';
-  }, [ioTasks.length, execTasks.length, selectedIo.length, selectedExec.length]);
-
   const applyBulkMode = (mode: string | number) => {
     if (mode === 'all') {
       patch({
