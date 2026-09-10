@@ -459,7 +459,7 @@ export function FeedbackDrawer({ open, room, onClose }: FeedbackDrawerProps) {
   const footer = (
     <div className="feedback-footer">
       <Button onClick={onClose}>关闭</Button>
-      <Space>
+      <div className="feedback-footer-actions">
         {step > 0 && step < 3 && (
           <Button onClick={() => setStep((s) => s - 1)}>上一步</Button>
         )}
@@ -479,16 +479,11 @@ export function FeedbackDrawer({ open, room, onClose }: FeedbackDrawerProps) {
           </Button>
         )}
         {step === 3 && (
-          <Button
-            type="primary"
-            onClick={() => {
-              onClose();
-            }}
-          >
+          <Button type="primary" onClick={onClose}>
             完成
           </Button>
         )}
-      </Space>
+      </div>
     </div>
   );
 
@@ -541,25 +536,13 @@ export function FeedbackDrawer({ open, room, onClose }: FeedbackDrawerProps) {
             <div className="feedback-bulk-left">
               <span className="feedback-bulk-label">快捷选择</span>
               <Space wrap size={8}>
-                <Button
-                  size="small"
-                  type={bulkMode === 'all' ? 'primary' : 'default'}
-                  onClick={() => applyBulkMode('all')}
-                >
+                <Button size="small" onClick={() => applyBulkMode('all')}>
                   全部
                 </Button>
-                <Button
-                  size="small"
-                  type={bulkMode === 'io' ? 'primary' : 'default'}
-                  onClick={() => applyBulkMode('io')}
-                >
+                <Button size="small" onClick={() => applyBulkMode('io')}>
                   仅输入输出
                 </Button>
-                <Button
-                  size="small"
-                  type={bulkMode === 'exec' ? 'primary' : 'default'}
-                  onClick={() => applyBulkMode('exec')}
-                >
+                <Button size="small" onClick={() => applyBulkMode('exec')}>
                   仅执行流程
                 </Button>
               </Space>

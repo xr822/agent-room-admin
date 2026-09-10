@@ -500,6 +500,22 @@
   margin-bottom: 16px;
 }
 
+.feedback-footer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.feedback-footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-left: auto;
+}
+
 .feedback-room-alert {
   margin-bottom: 16px;
 }
