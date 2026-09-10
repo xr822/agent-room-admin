@@ -500,8 +500,8 @@
   margin-bottom: 16px;
 }
 
-.feedback-footer {
-  display: flex;
+.feedback-drawer-footer.ant-drawer-footer {
+  display: flex !important;
   width: 100%;
   align-items: center;
   justify-content: space-between;
@@ -514,6 +514,7 @@
   justify-content: flex-end;
   gap: 8px;
   margin-left: auto;
+  flex-shrink: 0;
 }
 
 .feedback-room-alert {

@@ -444,7 +444,7 @@ export function FeedbackDrawer({ open, room, onClose }: FeedbackDrawerProps) {
   };
 
   const footer = (
-    <div className="feedback-footer">
+    <>
       <Button onClick={onClose}>关闭</Button>
       <div className="feedback-footer-actions">
         {step > 0 && step < 3 && (
@@ -471,18 +471,26 @@ export function FeedbackDrawer({ open, room, onClose }: FeedbackDrawerProps) {
           </Button>
         )}
       </div>
-    </div>
+    </>
   );
 
   return (
     <Drawer
       title="用户 Case 反馈"
-      width={720}
+      size={720}
       open={open}
       onClose={onClose}
       destroyOnHidden
       footer={footer}
-      className="feedback-drawer"
+      classNames={{ root: 'feedback-drawer', footer: 'feedback-drawer-footer' }}
+      styles={{
+        footer: {
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: 12,
+        },
+      }}
     >
       <Steps
         size="small"
@@ -521,15 +529,15 @@ export function FeedbackDrawer({ open, room, onClose }: FeedbackDrawerProps) {
 
           <div className="feedback-bulk-bar">
             <div className="feedback-bulk-left">
-              <span className="feedback-bulk-label">快捷选择</span>
+              <span className="feedback-bulk-label">选择范围</span>
               <Space wrap size={8}>
-                <Button size="small" onClick={() => applyBulkMode('all')}>
+                <Button size="small" type="default" onClick={() => applyBulkMode('all')}>
                   全部
                 </Button>
-                <Button size="small" onClick={() => applyBulkMode('io')}>
+                <Button size="small" type="default" onClick={() => applyBulkMode('io')}>
                   仅输入输出
                 </Button>
-                <Button size="small" onClick={() => applyBulkMode('exec')}>
+                <Button size="small" type="default" onClick={() => applyBulkMode('exec')}>
                   仅执行流程
                 </Button>
               </Space>
