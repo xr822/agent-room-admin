@@ -6,7 +6,6 @@ import {
   Form,
   Input,
   Select,
-  Segmented,
   Space,
   Steps,
   Tag,
@@ -226,7 +225,7 @@ function ExecCard({
 
 export function FeedbackDrawer({ open, room, onClose }: FeedbackDrawerProps) {
   const [step, setStep] = useState(0);
-  const [form, setForm] = useState<FeedbackFormState>(emptyForm);
+  const [form, setForm] = useState<FeedbackFormState>(() => emptyForm());
   const [submitting, setSubmitting] = useState(false);
   const [results, setResults] = useState<SubmitTargetResult[] | null>(null);
 
@@ -246,6 +245,7 @@ export function FeedbackDrawer({ open, room, onClose }: FeedbackDrawerProps) {
       execTasks.length > 0 && selectedExec.length === execTasks.length;
     const noneIo = selectedIo.length === 0;
     const noneExec = selectedExec.length === 0;
+    if (noneIo && noneExec) return 'none';
     if (allIo && allExec) return 'all';
     if (allIo && noneExec) return 'io';
     if (noneIo && allExec) return 'exec';
@@ -539,17 +539,30 @@ export function FeedbackDrawer({ open, room, onClose }: FeedbackDrawerProps) {
 
           <div className="feedback-bulk-bar">
             <div className="feedback-bulk-left">
-              <span className="feedback-bulk-label">选择范围</span>
-              <Segmented
-                size="middle"
-                value={bulkMode === 'custom' ? undefined : bulkMode}
-                options={[
-                  { label: '全部', value: 'all' },
-                  { label: '仅输入输出', value: 'io' },
-                  { label: '仅执行流程', value: 'exec' },
-                ]}
-                onChange={applyBulkMode}
-              />
+              <span className="feedback-bulk-label">快捷选择</span>
+              <Space wrap size={8}>
+                <Button
+                  size="small"
+                  type={bulkMode === 'all' ? 'primary' : 'default'}
+                  onClick={() => applyBulkMode('all')}
+                >
+                  全部
+                </Button>
+                <Button
+                  size="small"
+                  type={bulkMode === 'io' ? 'primary' : 'default'}
+                  onClick={() => applyBulkMode('io')}
+                >
+                  仅输入输出
+                </Button>
+                <Button
+                  size="small"
+                  type={bulkMode === 'exec' ? 'primary' : 'default'}
+                  onClick={() => applyBulkMode('exec')}
+                >
+                  仅执行流程
+                </Button>
+              </Space>
             </div>
             <div className="feedback-bulk-right">
               <span className="feedback-bulk-count">
