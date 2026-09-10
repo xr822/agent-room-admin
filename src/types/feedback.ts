@@ -107,7 +107,7 @@ export const FEEDBACK_TYPE_OPTIONS: Array<{
   {
     value: 'experience',
     label: '产品体验',
-    desc: '输入引导、限制说明、状态反馈、失败提示等体验问题',
+    desc: '用户在理解或使用过程中明显受阻',
   },
   {
     value: 'requirement',

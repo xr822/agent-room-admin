@@ -277,18 +277,8 @@ export function FeedbackDrawer({ open, room, onClose }: FeedbackDrawerProps) {
 
   useEffect(() => {
     if (!open) return;
-    const ios = buildIoTasks();
-    const execs = buildExecutionFeedbackTasks();
     setStep(0);
-    setForm({
-      ...emptyForm(),
-      // 演示：默认勾选全部，方便直接看「多记录 + 长提示词」群卡片效果
-      selectedIoIds: ios.map((t) => t.id),
-      selectedExecIds: execs.map((t) => t.id),
-      description:
-        '用户上传耳机产品图，要求生成 5s Product Review 图文视频；Agent 对超长提示词理解不完整，且 AIGC 步骤超时失败，无法继续承接后续「更快一点」的修改。',
-      feedbackType: 'agent',
-    });
+    setForm(emptyForm());
     setResults(null);
     setSubmitting(false);
   }, [open]);
@@ -340,17 +330,16 @@ export function FeedbackDrawer({ open, room, onClose }: FeedbackDrawerProps) {
       ...prev,
       bug: {
         ...prev.bug,
-        title: prev.bug.title || autoBugTitle(prev.feedbackType, prev.description),
-        reproduceSteps:
-          prev.bug.reproduceSteps ||
-          autoReproduceSteps({
-            roomId: room.roomId,
-            uid: room.uid,
-            roomLink,
-            ioTasks: selectedIo,
-            execTasks: selectedExec,
-            description: prev.description,
-          }),
+        // 进入处理方式步时按当前类型/描述/所选 Case 重算，避免返回修改后仍用旧自动填充
+        title: autoBugTitle(prev.feedbackType, prev.description),
+        reproduceSteps: autoReproduceSteps({
+          roomId: room.roomId,
+          uid: room.uid,
+          roomLink,
+          ioTasks: selectedIo,
+          execTasks: selectedExec,
+          description: prev.description,
+        }),
       },
       requirement: {
         ...prev.requirement,
@@ -892,7 +881,13 @@ export function FeedbackDrawer({ open, room, onClose }: FeedbackDrawerProps) {
 
             {form.methods.includes('group') && (
               <div className="feedback-subform">
-                <Typography.Title level={5}>群消息预览</Typography.Title>
+                <Typography.Title level={5}>群消息卡片示意</Typography.Title>
+                <Alert
+                  type="info"
+                  showIcon
+                  className="feedback-proto-hint"
+                  title="仅原型示意：正式流程提交后会直接发到群里，不会单独出现此预览页。"
+                />
                 <GroupChatCard
                   room={room}
                   feedbackType={form.feedbackType}

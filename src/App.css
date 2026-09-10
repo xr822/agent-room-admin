@@ -784,12 +784,8 @@
   width: 100%;
 }
 
-.feedback-subform {
-  margin-top: 8px;
-  padding: 12px 14px;
-  border: 1px solid #f0f0f0;
-  border-radius: 8px;
-  background: #fafafa;
+.feedback-proto-hint {
+  margin-bottom: 12px;
 }
 
 .feedback-field-block {
