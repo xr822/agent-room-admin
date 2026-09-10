@@ -163,15 +163,9 @@ export function GroupChatCard({
     : { accent: '#8a8f98', soft: '#f4f5f6', text: '#5c616a' };
   const relatedCount = ioTasks.length + execTasks.length;
 
-  /** 多条时默认收起关联列表；展开后完整展示，不设内部滚动 */
-  const [listOpen, setListOpen] = useState(relatedCount <= 1);
-  const [activeId, setActiveId] = useState<string | null>(() => {
-    if (relatedCount === 1) {
-      return ioTasks[0]?.id ?? execTasks[0]?.id ?? null;
-    }
-    const firstFail = execTasks.find((t) => summarizeExecFailures(t).length > 0);
-    return firstFail?.id ?? null;
-  });
+  /** 关联列表默认收起；展开后完整展示，不设内部滚动 */
+  const [listOpen, setListOpen] = useState(false);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   const syncTags = useMemo(
     () =>

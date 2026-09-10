@@ -864,9 +864,6 @@ export function FeedbackDrawer({ open, room, onClose }: FeedbackDrawerProps) {
                     }
                   />
                 </Form.Item>
-                <Typography.Text type="secondary">
-                  来源固定为「Roboneo 后台走查」；UID / Room / 关联任务将自动写入。
-                </Typography.Text>
               </div>
             )}
 
